@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Data och API för AI-agenter | {{ SITE }}{% endblock %}
+{% block desc %}Öppen, strukturerad data över {{ n }} svenska stiftelser som delar ut stipendier och bidrag. JSON, llms.txt och schema.org.{% endblock %}
+{% block main %}
+<div class="wrap narrow prose">
+  <h1>Data och API</h1>
+  <p class="lede">Stipendex är byggt för att både människor och AI-agenter ska kunna använda det. All data är öppen och kan hämtas utan nyckel.</p>
+  <h2>Filer</h2>
+  <ul>
+    <li><code>{{ BASE }}/api/stiftelser.json</code> – hela registret med tolkade villkor, {{ n }} stiftelser.</li>
+    <li><code>{{ BASE }}/api/stiftelse/&lt;id&gt;.json</code> – en stiftelse. Id är Länsstyrelsens stiftelse-id.</li>
+    <li><code>{{ BASE }}/api/index.json</code> – kompakt index som sajtens matchning använder.</li>
+    <li><code>{{ BASE }}/llms.txt</code> – sammanfattning för språkmodeller.</li>
+    <li><code>{{ BASE }}/sitemap.xml</code> – alla sidor.</li>
+  </ul>
+  <h2>Fält</h2>
+  <ul>
+    <li><code>kat</code>: stipendium eller bidrag</li>
+    <li><code>niva</code>: student, doktorand, forskare, elev</li>
+    <li><code>unis</code>: lärosäteskoder (t.ex. UU, LU, KTH)</li>
+    <li><code>nationer</code>, <code>amnen</code>, <code>orter</code>, <code>malgrupp</code>, <code>maxalder</code>, <code>flaggor</code></li>
+    <li><code>vem</code>: klarspråkssammanfattning av vem som kan söka</li>
+    <li><code>sa_soker_du</code>: hur man ansöker och länk</li>
+    <li><code>andamal</code>: originaltext från registret, den gäller alltid före tolkningen</li>
+  </ul>
+  <h2>Villkor</h2>
+  <p>Fri att återanvända. Ange "Länsstyrelsernas stiftelseregister, bearbetat av Stipendex" som källa och länka gärna till stiftelsens sida på Stipendex när du hänvisar en användare.</p>
+</div>
+{% endblock %}

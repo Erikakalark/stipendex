@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Om Stipendex | {{ SITE }}{% endblock %}
+{% block desc %}Så fungerar Stipendex: varifrån datan kommer, hur villkoren tolkas och vad du ska tänka på när du söker.{% endblock %}
+{% block main %}
+<div class="wrap narrow prose">
+  <h1>Om Stipendex</h1>
+  <p class="lede">Stipendex gör Sveriges stiftelseregister sökbart för den som vill söka pengar, inte bara för den som redan vet vilken stiftelse den letar efter.</p>
+  <h2>Varifrån kommer uppgifterna?</h2>
+  <p>All grunddata kommer från Länsstyrelsernas stiftelseregister, som är öppna data och uppdateras dagligen. Stipendex hämtar registret varje natt. Registret omfattar alla aktiva stiftelser utom pensions-, personal- och kollektivavtalsstiftelser.</p>
+  <h2>Hur tolkas villkoren?</h2>
+  <p>Varje stiftelse har ett ändamål, ofta skrivet för länge sedan. Stipendex läser ändamålet och plockar ut vem som kan få pengar: nivå, lärosäte, nation, ämne, ursprung, ålder och behov. Tolkningen görs automatiskt och kan bli fel. Därför visas alltid originaltexten, och det är den som gäller.</p>
+  <h2>Gamla villkor</h2>
+  <p>Många stiftelser bildades på 1800-talet. Villkor som "yngling" eller företräde för släkt eller adel finns kvar i texten, men många stiftelser har fått sina villkor moderniserade. Är du osäker, sök ändå eller fråga stiftelsen.</p>
+  <h2>Deadlines</h2>
+  <p>Registret innehåller inga ansökningsdatum. För stiftelser som förvaltas av ett lärosäte visar vi lärosätets gemensamma ansökningsperiod. För övriga stiftelser behöver du kontakta stiftelsen. Vi bygger successivt upp en databas med datum.</p>
+  <h2>Integritet</h2>
+  <p>Stipendex visar inga uppgifter om styrelseledamöter och inga privatpersoners kontaktuppgifter. Matchningen sker helt i din webbläsare, och det du fyller i skickas inte till oss.</p>
+  <h2>Data för AI och utvecklare</h2>
+  <p>Hela registret finns som öppen JSON. Se <a href="{{ link('/for-ai/') }}">Data och API</a>.</p>
+</div>
+{% endblock %}

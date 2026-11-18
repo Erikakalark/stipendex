@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Sidan finns inte | {{ SITE }}{% endblock %}
+{% block main %}
+<div class="wrap narrow">
+  <h1>Sidan finns inte</h1>
+  <p class="lede">Stiftelsen kan ha avregistrerats eller bytt namn. Sök bland alla stiftelser i stället.</p>
+  <p><a href="{{ link('/') }}">Till startsidan</a> · <a href="{{ link('/alla/') }}">Alla stiftelser</a></p>
+</div>
+{% endblock %}

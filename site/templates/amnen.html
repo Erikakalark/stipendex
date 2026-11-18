@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Stipendier per ämne | {{ SITE }}{% endblock %}
+{% block desc %}Stipendier och bidrag från svenska stiftelser sorterade efter ämnesområde, från medicin till konst och musik.{% endblock %}
+{% block main %}
+<div class="wrap narrow">
+  <h1>Stipendier per ämne</h1>
+  <p class="lede">Många stiftelser är bundna till ett ämne. Välj ditt område.</p>
+  <ul class="grid">
+    {% for s, slug, n in subj_list %}<li><a href="{{ link('/amne/' ~ slug ~ '/') }}"><strong>{{ s[0]|upper }}{{ s[1:] }}</strong><span>{{ n }} stiftelser</span></a></li>{% endfor %}
+  </ul>
+</div>
+{% endblock %}

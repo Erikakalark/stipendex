@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}{{ r.namn }} – vem kan söka och hur | {{ SITE }}{% endblock %}
+{% block desc %}{{ r.vem }} Så söker du stipendium eller bidrag från {{ r.namn }}.{% endblock %}
+{% block head %}<script type="application/ld+json">{{ ld | safe }}</script>
+<link rel="alternate" type="application/json" href="{{ BASE }}/api/stiftelse/{{ r.id }}.json">{% endblock %}
+{% block main %}
+<div class="wrap narrow">
+  <nav class="crumbs" aria-label="Brödsmulor"><a href="{{ link('/') }}">Start</a> / <a href="{{ link('/alla/') }}">Stiftelser</a></nav>
+  <p class="eyebrow">{{ "Stipendium" if r.kat == "stipendium" else "Bidrag" }}{% if r.orgnr %} · Org.nr {{ r.orgnr }}{% endif %}</p>
+  <h1>{{ r.namn }}</h1>
+  <p class="lede">{{ r.vem }}</p>
+
+  <section class="facts" aria-label="Villkor i korthet">
+    <dl>
+      {% if r.niva %}<div><dt>Vem</dt><dd>{{ r.niva | join(", ") }}</dd></div>{% endif %}
+      {% if r.malgrupp %}<div><dt>Målgrupp</dt><dd>{{ r.malgrupp | join(", ") }}</dd></div>{% endif %}
+      {% if r.unis %}<div><dt>Lärosäte</dt><dd>{% for u in r.unis %}<a href="{{ link('/larosate/' ~ u.lower() ~ '/') }}">{{ UNIS[u].name }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</dd></div>{% endif %}
+      {% if r.nationer %}<div><dt>Nation</dt><dd>{% for n in r.nationer %}<a href="{{ link('/nation/' ~ slugify(n) ~ '/') }}">{{ n }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</dd></div>{% endif %}
+      {% if r.amnen %}<div><dt>Ämne</dt><dd>{% for s in r.amnen %}<a href="{{ link('/amne/' ~ slugify(s) ~ '/') }}">{{ s }}</a>{% if not loop.last %}, {% endif %}{% endfor %}</dd></div>{% endif %}
+      {% if r.orter %}<div><dt>Anknytning</dt><dd>{{ r.orter | join(", ") }}</dd></div>{% endif %}
+      {% if r.maxalder %}<div><dt>Ålder</dt><dd>under ca {{ r.maxalder }} år</dd></div>{% endif %}
+    </dl>
+    {% set f = r.flaggor %}
+    {% if f %}<ul class="chips">
+      {% if "behov" in f %}<li>Ekonomiskt behov</li>{% endif %}
+      {% if "meritkrav" in f %}<li>Goda studieresultat</li>{% endif %}
+      {% if "resa" in f %}<li>Resa eller utlandsstudier</li>{% endif %}
+      {% if "bostad" in f %}<li>Boende</li>{% endif %}
+      {% if "man" in f %}<li class="w">Ursprungligen bara för män</li>{% endif %}
+      {% if "kvinna" in f %}<li class="w">Ursprungligen bara för kvinnor</li>{% endif %}
+      {% if "foretrade_slakt" in f %}<li class="w">Företräde för donatorns släkt</li>{% endif %}
+      {% if "foretrade_adel" in f %}<li class="w">Företräde för adliga sökande</li>{% endif %}
+    </ul>{% endif %}
+  </section>
+
+  <section>
+    <h2>Så söker du</h2>
+    <p>{{ how[0] }}{% if how[1] %} <a href="{{ how[1] }}" rel="noopener">{{ how[2] }}</a>{% endif %}</p>
+    {% if r.kontakt.co or r.kontakt.adress or r.kontakt.telefon %}
+    <p class="contact">{% if r.kontakt.co %}c/o {{ r.kontakt.co }}<br>{% endif %}{% if r.kontakt.adress %}{{ r.kontakt.adress }}<br>{% endif %}{% if r.kontakt.telefon %}Tel. {{ r.kontakt.telefon }}{% endif %}</p>
+    {% endif %}
+  </section>
+
+  <section>
+    <h2>Stiftelsens ändamål</h2>
+    <blockquote class="purpose">{{ r.andamal }}</blockquote>
+    <p class="note">Ändamålet återges ordagrant från Länsstyrelsernas stiftelseregister. Sammanfattningen ovan är en automatisk tolkning och kan vara fel. Villkor som gäller kön eller släktskap kan ha ändrats sedan stiftelsen bildades.</p>
+  </section>
+
+  {% if related %}
+  <section>
+    <h2>Liknande stiftelser</h2>
+    <ul class="list">{% for x in related %}<li><a href="{{ link('/stiftelse/' ~ x.slug ~ '/') }}">{{ x.namn }}</a><span>{{ x.vem }}</span></li>{% endfor %}</ul>
+  </section>
+  {% endif %}
+</div>
+{% endblock %}

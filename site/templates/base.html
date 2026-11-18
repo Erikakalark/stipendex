@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{{ SITE }}{% endblock %}</title>
+<meta name="description" content="{% block desc %}Hitta stipendier och bidrag från svenska stiftelser. Alla {{ N_TOTAL|tal }} stiftelser som delar ut pengar till enskilda, tolkade och sökbara.{% endblock %}">
+<link rel="canonical" href="{{ BASE }}{{ path }}">
+<meta property="og:site_name" content="{{ SITE }}">
+<meta property="og:title" content="{{ self.title() }}">
+<meta property="og:description" content="{{ self.desc() }}">
+<meta property="og:locale" content="sv_SE">
+<link rel="alternate" type="application/json" href="{{ BASE }}/api/stiftelser.json" title="Stipendex dataset">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,500;6..72,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ rel }}static/style.css">
+{% block head %}{% endblock %}
+</head>
+<body>
+<a class="skip" href="#main">Hoppa till innehållet</a>
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="{{ link('/') }}">Stipendex</a>
+    <nav aria-label="Huvudmeny">
+      <a href="{{ link('/') }}">Hitta stipendier</a>
+      <a href="{{ link('/bidrag/') }}">Bidrag</a>
+      <a href="{{ link('/larosate/') }}">Lärosäten</a>
+      <a href="{{ link('/amne/') }}">Ämnen</a>
+      <a href="{{ link('/om/') }}">Om</a>
+    </nav>
+  </div>
+</header>
+<main id="main">
+{% block main %}{% endblock %}
+</main>
+<footer class="foot">
+  <div class="wrap foot-in">
+    <p><strong>Stipendex</strong> är ett oberoende register över svenska stiftelser som delar ut stipendier och bidrag. Källa: Länsstyrelsernas stiftelseregister, uppdaterat {{ TODAY }}. Villkoren är tolkade automatiskt, läs alltid stiftelsens eget ändamål.</p>
+    <p><a href="{{ link('/om/') }}">Om Stipendex</a> · <a href="{{ link('/for-ai/') }}">Data och API för AI-agenter</a> · <a href="{{ link('/alla/') }}">Alla stiftelser</a></p>
+  </div>
+</footer>
+{% block scripts %}{% endblock %}
+</body>
+</html>

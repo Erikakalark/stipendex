@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Stipendier per lärosäte och nation | {{ SITE }}{% endblock %}
+{% block desc %}Stiftelser och stipendier knutna till svenska universitet och studentnationer, med information om hur du söker.{% endblock %}
+{% block main %}
+<div class="wrap narrow">
+  <h1>Lärosäten och nationer</h1>
+  <p class="lede">Många stipendier söks via lärosätets gemensamma ansökan. Välj ditt lärosäte för att se stiftelserna och hur ansökan går till.</p>
+  <ul class="grid">
+    {% for code, u, n in uni_list %}<li><a href="{{ link('/larosate/' ~ code.lower() ~ '/') }}"><strong>{{ u.name }}</strong><span>{{ n }} stiftelser</span></a></li>{% endfor %}
+  </ul>
+  {% if nations %}
+  <h2>Studentnationer</h2>
+  <ul class="grid">
+    {% for n, items in nations %}<li><a href="{{ link('/nation/' ~ slugify(n) ~ '/') }}"><strong>{{ n }}</strong><span>{{ items|length }} stiftelser</span></a></li>{% endfor %}
+  </ul>
+  {% endif %}
+</div>
+{% endblock %}

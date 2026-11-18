@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Stipendex – hitta stipendier och bidrag från svenska stiftelser{% endblock %}
+{% block desc %}Fyll i vem du är och se vilka av Sveriges stiftelser som delar ut stipendier eller bidrag till just dig, vad villkoren betyder och hur du söker. Gratis.{% endblock %}
+{% block head %}<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Stipendex","url":"{{ BASE }}/","description":"Register över svenska stiftelser som delar ut stipendier och bidrag","inLanguage":"sv"}</script>{% endblock %}
+{% block main %}
+<section class="hero">
+  <div class="wrap">
+    <h1>Hitta stipendierna som är skrivna för dig</h1>
+    <p class="lede">Sverige har tusentals stiftelser som delar ut pengar till studenter, forskare och personer som behöver stöd. De flesta söks av nästan ingen. Stipendex läser {{ N_TOTAL|tal }} stiftelsers villkor och visar vilka som passar dig.</p>
+  </div>
+</section>
+
+<div class="wrap app">
+  <form id="profile" autocomplete="off" aria-label="Din profil">
+    <div class="tabs" role="tablist">
+      <button type="button" role="tab" id="tab-stip" aria-selected="true">Stipendier ({{ n_stip|tal }})</button>
+      <button type="button" role="tab" id="tab-bidrag" aria-selected="false">Bidrag ({{ n_bidrag|tal }})</button>
+    </div>
+    <div class="stip-only">
+      <div class="field"><label for="uni">Lärosäte</label><select id="uni"></select></div>
+      <div class="field"><label for="niva">Jag är</label>
+        <select id="niva"><option value="student">Student</option><option value="doktorand">Doktorand</option><option value="forskare">Forskare</option><option value="elev">Gymnasieelev</option></select></div>
+      <div class="field"><label for="amne">Ämnesområde</label><select id="amne"></select></div>
+      <div class="field" id="nationfield"><label for="nation">Nation</label><select id="nation"></select></div>
+    </div>
+    <div class="bidrag-only" hidden>
+      <fieldset class="checks"><legend>Vad gäller det?</legend><div id="aidboxes"></div></fieldset>
+    </div>
+    <div class="row2">
+      <div class="field"><label for="land">Född/uppvuxen i</label><select id="land"></select></div>
+      <div class="field"><label for="ort">Ort (valfritt)</label><input type="text" id="ort" placeholder="t.ex. Luleå"></div>
+    </div>
+    <div class="row2 stip-only">
+      <div class="field"><label for="alder">Ålder</label><input type="number" id="alder" min="14" max="99"></div>
+      <div class="field"><label for="kon">Kön</label><select id="kon"><option value="">Vill ej ange</option><option value="kvinna">Kvinna</option><option value="man">Man</option></select></div>
+    </div>
+    <fieldset class="checks stip-only"><legend>Stämmer något av detta?</legend>
+      <label><input type="checkbox" id="behov"> Jag har begränsad ekonomi</label>
+      <label><input type="checkbox" id="resa"> Jag planerar utlandsstudier eller studieresa</label>
+      <label><input type="checkbox" id="bostad"> Jag söker hjälp med boende</label>
+    </fieldset>
+    <p class="note" id="exnote">Exempelprofil ifylld. Ändra till dina egna uppgifter.</p>
+  </form>
+
+  <div id="results" aria-live="polite">
+    <div class="summary" id="summary"></div>
+    <section><h2>Riktade till dig</h2><p class="sub">Villkoren pekar ut något du angett, som ditt lärosäte, din nation, ditt ämne eller din hembygd.</p><div class="cards" id="l-hit"></div></section>
+    <section><h2>Allmänna du kan söka</h2><p class="sub">Inga särskilda krav utöver de grundläggande.</p><div class="cards" id="l-gen"></div></section>
+    <section><h2>Kanske, kolla villkoren</h2><p class="sub">Matchar delvis. Läs ändamålet, ett villkor kan utesluta dig eller ha ändrats.</p><div class="cards" id="l-chk"></div></section>
+  </div>
+</div>
+
+<section class="wrap narrow browse">
+  <h2>Bläddra</h2>
+  <ul class="grid">
+    {% for code, u, n in uni_list[:6] %}<li><a href="{{ link('/larosate/' ~ code.lower() ~ '/') }}"><strong>{{ u.name }}</strong><span>{{ n }} stiftelser</span></a></li>{% endfor %}
+    {% for s, slug, n in subj_list[:6] %}<li><a href="{{ link('/amne/' ~ slug ~ '/') }}"><strong>{{ s[0]|upper }}{{ s[1:] }}</strong><span>{{ n }} stiftelser</span></a></li>{% endfor %}
+  </ul>
+</section>
+<script id="cfg" type="application/json">{{ cfg | safe }}</script>
+{% endblock %}
+{% block scripts %}<script>window.STIP_ROOT = "{{ rel }}"; window.STIP_LINK_SUFFIX = "{{ 'index.html' if link('/x/').endswith('index.html') else '' }}";</script>
+<script src="{{ rel }}static/app.js" defer></script>{% endblock %}

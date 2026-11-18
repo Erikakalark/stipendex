@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% if page > 1 %} – sida {{ page }}{% endif %} | {{ SITE }}{% endblock %}
+{% block desc %}{{ intro }}{% endblock %}
+{% block main %}
+<div class="wrap narrow">
+  <nav class="crumbs" aria-label="Brödsmulor"><a href="{{ link('/') }}">Start</a>{% for t, u in crumbs %} / <a href="{{ link(u) }}">{{ t }}</a>{% endfor %}</nav>
+  <h1>{{ title }}</h1>
+  <p class="lede">{{ intro }}</p>
+  {% if items %}
+  <ul class="list">
+    {% for x in items %}<li><a href="{{ link('/stiftelse/' ~ x.slug ~ '/') }}">{{ x.namn }}</a><span>{{ x.vem }}</span></li>{% endfor %}
+  </ul>
+  {% else %}<p class="note">Inga stiftelser hittades här ännu.</p>{% endif %}
+  {% if pages > 1 %}
+  <nav class="pager" aria-label="Sidor">
+    {% for i in range(1, pages + 1) %}{% if i == page %}<span aria-current="page">{{ i }}</span>{% else %}<a href="{{ link(prefix if i == 1 else prefix ~ 'sida/' ~ i ~ '/') }}">{{ i }}</a>{% endif %}{% endfor %}
+  </nav>
+  {% endif %}
+</div>
+{% endblock %}

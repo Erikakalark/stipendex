@@ -1,0 +1,7 @@
+dist/
+dist-preview/
+data/raw/
+data/stiftelser.json
+__pycache__/
+.pytest_cache/
+.DS_Store
